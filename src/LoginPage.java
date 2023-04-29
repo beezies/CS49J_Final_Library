@@ -31,7 +31,6 @@ public class LoginPage {
 		JButton loginButton = new JButton("Login");
 
 		JLabel newUser = new JLabel("<html><h1><font size =\"4\"><u>New User? Click Here!</u></font></h1></html>");
-		newUser.setFont(new Font("comic sans", Font.PLAIN, 20));
 
 		panel.add(new JLabel("                 "));
 		panel.add(welcomeLabel);
