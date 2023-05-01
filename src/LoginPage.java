@@ -1,14 +1,17 @@
 import java.awt.*;
+import java.awt.event.*;
+
 import javax.swing.*;
 
 public class LoginPage {
 
 	public static void main(String[] args) {
-		
-		makeLoginFrame();
+
+		LoginPage lp = new LoginPage();
+		lp.makeLoginFrame();
 	}
 
-	public static void makeLoginFrame() {
+	public void makeLoginFrame() {
 
 		JFrame frame = new JFrame("Login Page");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,7 +34,7 @@ public class LoginPage {
 
 		JButton loginButton = new JButton("Login");
 
-		JLabel newUser = new JLabel("<html><h1><font size =\"4\"><u>New User? Click Here!</u></font></h1></html>");
+		JLabel newUserLabel = new JLabel("<html><h1><font size =\"4\"><u>New User? Click Here!</u></font></h1></html>");
 
 		panel.add(new JLabel("                 "));
 		panel.add(welcomeLabel);
@@ -42,7 +45,58 @@ public class LoginPage {
 		panel.add(passField);
 		panel.add(new JLabel("                 "));
 		panel.add(loginButton);
-		panel.add(newUser);
+		panel.add(newUserLabel);
+
+		loginButton.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Check credentials, then sign in if in file");
+				System.out.println("Username: " + usrField.getText());
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+		});
+
+		newUserLabel.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Open new user page");
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+		});
 
 		frame.setVisible(true);
 
