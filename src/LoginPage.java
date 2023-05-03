@@ -1,9 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.InputMismatchException;
 
 import javax.swing.*;
 
-public class LoginPage {
+public class LoginPage extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 
@@ -35,6 +36,9 @@ public class LoginPage {
 		JButton loginButton = new JButton("Login");
 
 		JLabel newUserLabel = new JLabel("<html><h1><font size =\"4\"><u>New User? Click Here!</u></font></h1></html>");
+		
+		JLabel errorLabel = new JLabel("<html><font size='4' color='red'> Your username or password is incorrect. </font></html>");
+		errorLabel.setBackground(Color.red);
 
 		panel.add(new JLabel("                 "));
 		panel.add(welcomeLabel);
@@ -51,8 +55,17 @@ public class LoginPage {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Check credentials, then sign in if in file");
+				System.out.println("Check credentials, then sign in if in file/admin");
 				System.out.println("Username: " + usrField.getText());
+
+				try {
+					User user = ValidateUser.validateUser(usrField.getText(), passField.getText());
+				} catch (InputMismatchException i) {
+					System.out.println("die");
+					panel.add(errorLabel);
+					frame.setVisible(true);
+				}
+
 			}
 
 			@Override
@@ -78,6 +91,7 @@ public class LoginPage {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Open new user page");
+				SignUpPage f = new SignUpPage();
 			}
 
 			@Override
@@ -99,6 +113,12 @@ public class LoginPage {
 		});
 
 		frame.setVisible(true);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 
