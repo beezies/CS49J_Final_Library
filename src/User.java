@@ -1,8 +1,8 @@
 
-abstract class User {
+abstract class User implements Comparable<User> {
 
-	private String userName;
-	private String password;
+	protected String userName;
+	protected String password;
 
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -13,6 +13,10 @@ abstract class User {
 	}
 
 	abstract String getName();
+
+	abstract String getUserName();
+
+	abstract String getPassword();
 
 }
 
@@ -34,21 +38,67 @@ class Member extends User {
 		return firstName + lastName;
 	}
 
+	@Override
+	String getUserName() {
+		return userName;
+	}
+
+	@Override
+	String getPassword() {
+		return password;
+	}
+
+	@Override
+	public int compareTo(User o) {
+
+		if (o == this)
+			return 0;
+
+		int nameDiff = (o.getName().compareTo(this.getName()));
+		if (nameDiff > 0)
+			return 1;
+		else if (nameDiff < 0)
+			return -1;
+
+		int userNameDiff = (o.getUserName().compareTo(this.getUserName()));
+		if (userNameDiff > 0)
+			return 1;
+		else if (userNameDiff < 0)
+			return -1;
+
+		return 0;
+	}
+
 }
 
 class AdminUser extends User {
 
-	private final String userName = "ADMIN";
-	private final String password = "ADMIN";
+	private final String ADMIN_USER = "ADMIN";
+	private final String ADMIN_PASS = "ADMIN";
 
 	public AdminUser() {
-		setUserName(userName);
-		setPassword(password);
+		setUserName(ADMIN_USER);
+		setPassword(ADMIN_PASS);
 	}
 
 	@Override
 	String getName() {
 		return "Admin User";
+	}
+
+	@Override
+	String getUserName() {
+		return ADMIN_USER;
+	}
+
+	@Override
+	String getPassword() {
+		return ADMIN_PASS;
+	}
+
+	@Override
+	public int compareTo(User o) {
+		return 0;
 	}
 
 }
