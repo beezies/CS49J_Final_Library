@@ -33,6 +33,13 @@ class Member extends User {
 
 	}
 
+	// Quick constructor for validation
+	public Member(String userName, String password) {
+		setUserName(userName);
+		setPassword(password);
+
+	}
+
 	@Override
 	String getName() {
 		return firstName + lastName;

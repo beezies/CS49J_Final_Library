@@ -78,15 +78,21 @@ public class LoginPage extends JFrame implements ActionListener {
 
 		if (e.getSource() == loginButton) {
 			try {
-				
+
 				User user = ValidateUser.validateUser(usrField.getText(), passField.getText());
+				dispose();
+
+				if (user.getName().equals("Admin User")) {
+					AdminPage ap = new AdminPage();
+				} else {
+					MemberPage mp = new MemberPage((Member) user);
+				}
 
 			} catch (InputMismatchException i) {
-				
-				System.out.println("die");
+
 				panel.add(errorLabel);
 				setVisible(true);
-				
+
 			}
 		}
 	}
