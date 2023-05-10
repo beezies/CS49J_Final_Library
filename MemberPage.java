@@ -1,3 +1,4 @@
+package library;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -7,53 +8,48 @@ import java.awt.Font;
 
 public class MemberPage extends JFrame implements ActionListener{
 	
-	public static void main(String[] args) {
-		MemberPage mp = new MemberPage(null);
-	}
-	
 	public MemberPage(Member m) {
-		
 		getContentPane().setBackground(SystemColor.info);
 		
-		JButton checkBtn = new JButton("Checked Out");
-		checkBtn.setVerticalAlignment(SwingConstants.TOP);
-		checkBtn.setFont(new Font("Arial", Font.PLAIN, 15));
-		checkBtn.addActionListener(new ActionListener() {
+		JButton btnNewButton = new JButton("Checked Out");
+		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
+		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CheckedOut cop = new CheckedOut();
+				checkedOut cop = new checkedOut();
 				dispose();
 			}
 		});
 		SpringLayout springLayout = new SpringLayout();
-		springLayout.putConstraint(SpringLayout.WEST, checkBtn, 87, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, checkBtn, -170, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, checkBtn, -95, SpringLayout.EAST, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, btnNewButton, 87, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton, -170, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, btnNewButton, -95, SpringLayout.EAST, getContentPane());
 		getContentPane().setLayout(springLayout);
-		getContentPane().add(checkBtn);
+		getContentPane().add(btnNewButton);
 		
-		JButton odBtn = new JButton("Overdue");
-		springLayout.putConstraint(SpringLayout.NORTH, odBtn, 48, SpringLayout.SOUTH, checkBtn);
-		springLayout.putConstraint(SpringLayout.WEST, odBtn, 87, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, odBtn, -95, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, odBtn, 0, SpringLayout.EAST, checkBtn);
-		odBtn.addActionListener(new ActionListener() {
+		JButton btnNewButton_1 = new JButton("Overdue");
+		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_1, 48, SpringLayout.SOUTH, btnNewButton);
+		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_1, 87, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1, -95, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1, 0, SpringLayout.EAST, btnNewButton);
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OverDue op = new OverDue();
+				overdue op = new overdue();
 				dispose();
 			}
 		});
-		odBtn.setFont(new Font("Arial", Font.PLAIN, 15));
-		getContentPane().add(odBtn);
+		btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 15));
+		getContentPane().add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("Browse Books");
-		springLayout.putConstraint(SpringLayout.NORTH, checkBtn, 46, SpringLayout.SOUTH, btnNewButton_1_1);
+		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton, 46, SpringLayout.SOUTH, btnNewButton_1_1);
 		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_1_1, 87, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1_1, -95, SpringLayout.EAST, getContentPane());
 		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_1_1, 59, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1_1, -243, SpringLayout.SOUTH, getContentPane());
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BrowseBook bbp = new BrowseBook();
+				browseBook bbp = new browseBook();
 				dispose();
 			}
 		});

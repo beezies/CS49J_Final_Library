@@ -7,7 +7,7 @@ import javax.swing.*;
 public class LoginPage extends JFrame implements ActionListener {
 
 	private JPanel panel = new JPanel();
-	private JLabel welcomeLabel = new JLabel("    Welcome to the Library!");
+	private JLabel libLabel = new JLabel("             ~ CS49J Library ~");
 	private JLabel usrLabel = new JLabel("Enter your username:");
 	private JLabel passLabel = new JLabel("Enter your password:");
 	private JTextField usrField = new JTextField();
@@ -27,7 +27,7 @@ public class LoginPage extends JFrame implements ActionListener {
 		panel.setBackground(Color.pink);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-		welcomeLabel.setFont(new Font("serif", Font.PLAIN, 20));
+		libLabel.setFont(new Font("serif", Font.PLAIN, 20));
 		usrField.setMaximumSize(new Dimension(500, usrField.getPreferredSize().height));
 		passField.setMaximumSize(new Dimension(500, passField.getPreferredSize().height));
 		loginButton.addActionListener(this);
@@ -35,7 +35,7 @@ public class LoginPage extends JFrame implements ActionListener {
 
 		getContentPane().add(panel);
 		panel.add(new JLabel("                 "));
-		panel.add(welcomeLabel);
+		panel.add(libLabel);
 		panel.add(new JLabel("                 "));
 		panel.add(usrLabel);
 		panel.add(usrField);
@@ -50,6 +50,7 @@ public class LoginPage extends JFrame implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				SignUpPage f = new SignUpPage();
+				dispose();
 			}
 
 			@Override
