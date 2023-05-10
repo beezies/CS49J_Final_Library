@@ -31,7 +31,7 @@ class Member extends User {
 		setUserName(userName);
 		setPassword(password);
 
-	}
+	}  
 
 	// Quick constructor for validation
 	public Member(String userName, String password) {
@@ -75,7 +75,7 @@ class Member extends User {
 
 		return 0;
 	}
-
+	
 }
 
 class AdminUser extends User {
