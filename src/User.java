@@ -14,10 +14,9 @@ import org.apache.commons.io.IOUtils;
 abstract class User implements Comparable<User> {
 
 	public static void main(String[] args) {
-		Member m = new Member("ehh", "evv", "ebb", "ell");
-//		m.checkout("book", "collins");
-//		m.checkout("book", "collins");
-//		m.checkout("book", "collins");
+		Member m = new Member("ebb", "ell");
+		m.checkout("hunget games", "ur mom");
+		m.checkout("percy", "ur dad");
 
 	}
 
@@ -49,7 +48,7 @@ class Member extends User {
 	JSONArray books;
 
 	// New account
-	public Member(String firstName, String lastName, String userName, String password) {
+	public Member( String userName, String password, String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		setUserName(userName);
@@ -74,7 +73,6 @@ class Member extends User {
 			String memberFileText = IOUtils.toString(is, "UTF-8");
 			JSONObject membersJSON = new JSONObject(memberFileText);
 			JSONArray membersArray = membersJSON.getJSONArray("members");
-			System.out.println(membersJSON);
 
 			memberJSON.put("username", userName);
 			memberJSON.put("password", password);
@@ -83,19 +81,50 @@ class Member extends User {
 			memberJSON.put("books checked", books);
 
 			membersArray.put(memberJSON);
-			System.out.println(membersJSON);
-
 
 			Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
-
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	public void checkout(String title, String author) {
+		JSONObject book = new JSONObject();
+		book.put("title", title);
+		book.put("author", author);
+		book.put("checkout date", LocalDate.now().toString());
+
+		try {
+			InputStream is = new FileInputStream(memberFileName);
+			String memberFileText = IOUtils.toString(is, "UTF-8");
+			JSONObject membersJSON = new JSONObject(memberFileText);
+			JSONArray membersArray = membersJSON.getJSONArray("members");
+
+			for (int i = 0; i < membersArray.length(); i++) {
+
+				JSONObject member = membersArray.getJSONObject(i);
+				String uname = member.getString("username");
+				System.out.println(uname);
+				System.out.println(userName);
+				if (uname.equals(userName)) {
+					books = member.getJSONArray("books checked");
+					books.put(book);
+					
+					System.out.println("hi");
+				}
+			}
+			
+			System.out.println(membersJSON);
+
+			Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
+		} catch (
+
+		Exception e1) {
 			e1.printStackTrace();
 		}
 	}
 
 	private Path getFilePath() {
-
 		return Paths.get(memberFileName);
 	}
 
@@ -112,17 +141,6 @@ class Member extends User {
 	@Override
 	String getPassword() {
 		return password;
-	}
-
-	public void checkout(String title, String author) {
-		JSONObject book = new JSONObject();
-		book.put("title", title);
-		book.put("author", author);
-		book.put("checkout date", LocalDate.now().toString());
-
-		books.put(book);
-
-		System.out.println(memberJSON);
 	}
 
 	@Override
