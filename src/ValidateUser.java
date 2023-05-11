@@ -2,7 +2,7 @@ import java.util.InputMismatchException;
 
 public class ValidateUser {
 
-	private String userFile = "//tbd";
+	private String userFile = "Members.json";
 	private final static String ADMIN_USER = "ADMIN";
 	private final static String ADMIN_PASS = "ADMIN";
 

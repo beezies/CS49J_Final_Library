@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -14,9 +15,7 @@ import org.apache.commons.io.IOUtils;
 abstract class User implements Comparable<User> {
 
 	public static void main(String[] args) {
-		Member m = new Member("ebb", "ell");
-		m.checkout("hunget games", "ur mom");
-		m.checkout("percy", "ur dad");
+		Member m = new Member("ebb", "ell", "emm", "epp");
 
 	}
 
@@ -48,7 +47,7 @@ class Member extends User {
 	JSONArray books;
 
 	// New account
-	public Member(String userName, String password, String firstName, String lastName) {
+	public Member(String userName, String password, String firstName, String lastName) throws InputMismatchException {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		setUserName(userName);
@@ -66,13 +65,21 @@ class Member extends User {
 		setPassword(password);
 	}
 
-	private void addToFile() {
+	private void addToFile() throws InputMismatchException {
 
 		try {
 			InputStream is = new FileInputStream(memberFileName);
 			String memberFileText = IOUtils.toString(is, "UTF-8");
 			JSONObject membersJSON = new JSONObject(memberFileText);
 			JSONArray membersArray = membersJSON.getJSONArray("members");
+
+			for (int i = 0; i < membersArray.length(); i++) {
+				JSONObject member = membersArray.getJSONObject(i);
+				String uname = member.getString("username");
+				if (uname.equals(userName)) {
+					throw new InputMismatchException();
+				}
+			}
 
 			memberJSON.put("username", userName);
 			memberJSON.put("password", password);
@@ -84,7 +91,7 @@ class Member extends User {
 
 			Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
 		} catch (Exception e1) {
-			e1.printStackTrace();
+			throw new InputMismatchException();
 		}
 	}
 

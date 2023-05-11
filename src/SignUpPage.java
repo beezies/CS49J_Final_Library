@@ -1,4 +1,6 @@
 import javax.swing.*;
+
+import java.util.InputMismatchException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.*;
@@ -121,9 +123,6 @@ class SignUpPage extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-	// method actionPerformed()
-	// to get the action performed
-	// by the user and act accordingly
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == submit) {
@@ -133,18 +132,25 @@ class SignUpPage extends JFrame implements ActionListener {
 			} else if (!passField.getText().equals(pass2Field.getText())) {
 				endMessage.setText("Passwords must match.");
 			} else {
-				Member m = new Member(userField.getText(), passField.getText(), fnField.getText(), lnField.getText());
-				endMessage.setText("Registered Successfully!");
+				try {
+					Member m = new Member(userField.getText(), passField.getText(), fnField.getText(),
+							lnField.getText());
 
-				Timer timer = new Timer();
-				TimerTask task = new TimerTask() {
-					@Override
-					public void run() {
-						MemberPage mp = new MemberPage(new Member(userField.getText(), pass.getText()));
-						dispose();
-					}
-				};
-				timer.schedule(task, (long) 1000);
+					endMessage.setText("Registered Successfully!");
+
+					Timer timer = new Timer();
+					TimerTask task = new TimerTask() {
+						@Override
+						public void run() {
+							MemberPage mp = new MemberPage(new Member(userField.getText(), pass.getText()));
+							dispose();
+						}
+					};
+					timer.schedule(task, (long) 1000);
+
+				} catch (InputMismatchException i) {
+					endMessage.setText("username already in use.");
+				}
 
 			}
 
