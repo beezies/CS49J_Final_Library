@@ -1,4 +1,3 @@
-package library;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -6,9 +5,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.SystemColor;
 import java.awt.Font;
 
-public class browseBook extends JFrame implements ActionListener{
+public class BrowseBook extends JFrame implements ActionListener{
 
-	public browseBook() {
+	public BrowseBook() {
 		setTitle("Browse Books");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

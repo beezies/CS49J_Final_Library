@@ -1,4 +1,3 @@
-package library;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -8,15 +7,18 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import java.awt.SystemColor;
 
-public class checkedOut extends JFrame implements ActionListener {
+public class CheckedOut extends JFrame implements ActionListener {
+	
+	public static void main(String[] args) {
+		CheckedOut co = new CheckedOut();
+	}
 
 
-	public checkedOut() {
+	public CheckedOut() {
 		setTitle("Checked Out");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(337, 368);
-		setVisible(true);
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.info);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,6 +55,8 @@ public class checkedOut extends JFrame implements ActionListener {
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnNewButton_1, -10, SpringLayout.SOUTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnNewButton_1, -10, SpringLayout.EAST, contentPane);
 		contentPane.add(btnNewButton_1);
+		
+		setVisible(true);
 		
 	}
 
