@@ -2,11 +2,8 @@
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -19,7 +16,6 @@ abstract class User implements Comparable<User> {
 
 	}
 
-	public static final String memberFileName = "Members.json";
 	protected String userName;
 	protected String password;
 
@@ -47,7 +43,7 @@ class Member extends User {
 	JSONArray books;
 
 	// New account
-	public Member(String userName, String password, String firstName, String lastName) throws InputMismatchException {
+	public Member(String userName, String password, String firstName, String lastName) throws IllegalArgumentException {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		setUserName(userName);
@@ -65,10 +61,10 @@ class Member extends User {
 		setPassword(password);
 	}
 
-	private void addToFile() throws InputMismatchException {
+	private void addToFile() throws IllegalArgumentException {
 
 		try {
-			InputStream is = new FileInputStream(memberFileName);
+			InputStream is = new FileInputStream(UserHandler.getFileName());
 			String memberFileText = IOUtils.toString(is, "UTF-8");
 			JSONObject membersJSON = new JSONObject(memberFileText);
 			JSONArray membersArray = membersJSON.getJSONArray("members");
@@ -77,7 +73,7 @@ class Member extends User {
 				JSONObject member = membersArray.getJSONObject(i);
 				String uname = member.getString("username");
 				if (uname.equals(userName)) {
-					throw new InputMismatchException();
+					throw new IllegalArgumentException();
 				}
 			}
 
@@ -89,9 +85,9 @@ class Member extends User {
 
 			membersArray.put(memberJSON);
 
-			Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
+			Files.write(UserHandler.getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
 		} catch (Exception e1) {
-			throw new InputMismatchException();
+			throw new IllegalArgumentException();
 		}
 	}
 
@@ -102,7 +98,7 @@ class Member extends User {
 		book.put("checkout date", LocalDate.now().toString());
 
 		try {
-			InputStream is = new FileInputStream(memberFileName);
+			InputStream is = new FileInputStream(UserHandler.getFileName());
 			String memberFileText = IOUtils.toString(is, "UTF-8");
 			JSONObject membersJSON = new JSONObject(memberFileText);
 			JSONArray membersArray = membersJSON.getJSONArray("members");
@@ -121,16 +117,12 @@ class Member extends User {
 
 			System.out.println(membersJSON);
 
-			Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
+			Files.write(UserHandler.getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
 		} catch (
 
 		Exception e1) {
 			e1.printStackTrace();
 		}
-	}
-
-	private Path getFilePath() {
-		return Paths.get(memberFileName);
 	}
 
 	@Override

@@ -149,7 +149,7 @@ class SignUpPage extends JFrame implements ActionListener {
 					timer.schedule(task, (long) 1000);
 
 				} catch (InputMismatchException i) {
-					endMessage.setText("username already in use.");
+					endMessage.setText("Username already in use.");
 				}
 
 			}

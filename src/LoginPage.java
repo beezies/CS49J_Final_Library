@@ -80,7 +80,7 @@ public class LoginPage extends JFrame implements ActionListener {
 		if (e.getSource() == loginButton) {
 			try {
 
-				User user = ValidateUser.validateUser(usrField.getText(), passField.getText());
+				User user = UserHandler.validateUser(usrField.getText(), passField.getText());
 				dispose();
 
 				if (user.getName().equals("Admin User")) {
@@ -89,7 +89,7 @@ public class LoginPage extends JFrame implements ActionListener {
 					MemberPage mp = new MemberPage((Member) user);
 				}
 
-			} catch (InputMismatchException i) {
+			} catch (IllegalArgumentException i) {
 
 				panel.add(errorLabel);
 				setVisible(true);
