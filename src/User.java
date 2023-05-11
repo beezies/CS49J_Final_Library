@@ -1,6 +1,27 @@
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.apache.commons.io.IOUtils;
+
 abstract class User implements Comparable<User> {
 
+	public static void main(String[] args) {
+		Member m = new Member("ehh", "evv", "ebb", "ell");
+//		m.checkout("book", "collins");
+//		m.checkout("book", "collins");
+//		m.checkout("book", "collins");
+
+	}
+
+	public static final String memberFileName = "Members.json";
 	protected String userName;
 	protected String password;
 
@@ -24,25 +45,63 @@ class Member extends User {
 
 	private String firstName;
 	private String lastName;
+	JSONObject memberJSON;
+	JSONArray books;
 
+	// New account
 	public Member(String firstName, String lastName, String userName, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		setUserName(userName);
 		setPassword(password);
 
-	}  
+		memberJSON = new JSONObject();
+		books = new JSONArray();
 
-	// Quick constructor for validation
+		addToFile();
+	}
+
+	// Quick constructor for login
 	public Member(String userName, String password) {
 		setUserName(userName);
 		setPassword(password);
+	}
 
+	private void addToFile() {
+
+		try {
+			InputStream is = new FileInputStream(memberFileName);
+			String memberFileText = IOUtils.toString(is, "UTF-8");
+			JSONObject membersJSON = new JSONObject(memberFileText);
+			JSONArray membersArray = membersJSON.getJSONArray("members");
+			System.out.println(membersJSON);
+
+			memberJSON.put("username", userName);
+			memberJSON.put("password", password);
+			memberJSON.put("first name", firstName);
+			memberJSON.put("last name", lastName);
+			memberJSON.put("books checked", books);
+
+			membersArray.put(memberJSON);
+			System.out.println(membersJSON);
+
+
+			Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
+
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	private Path getFilePath() {
+
+		return Paths.get(memberFileName);
 	}
 
 	@Override
 	String getName() {
-		return firstName + lastName;
+		return firstName + " " + lastName;
 	}
 
 	@Override
@@ -53,6 +112,17 @@ class Member extends User {
 	@Override
 	String getPassword() {
 		return password;
+	}
+
+	public void checkout(String title, String author) {
+		JSONObject book = new JSONObject();
+		book.put("title", title);
+		book.put("author", author);
+		book.put("checkout date", LocalDate.now().toString());
+
+		books.put(book);
+
+		System.out.println(memberJSON);
 	}
 
 	@Override
@@ -75,7 +145,7 @@ class Member extends User {
 
 		return 0;
 	}
-	
+
 }
 
 class AdminUser extends User {
