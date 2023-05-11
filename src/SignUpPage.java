@@ -133,8 +133,8 @@ class SignUpPage extends JFrame implements ActionListener {
 			} else if (!passField.getText().equals(pass2Field.getText())) {
 				endMessage.setText("Passwords must match.");
 			} else {
+				Member m = new Member(userField.getText(), passField.getText(), fnField.getText(), lnField.getText());
 				endMessage.setText("Registered Successfully!");
-				// store data
 
 				Timer timer = new Timer();
 				TimerTask task = new TimerTask() {

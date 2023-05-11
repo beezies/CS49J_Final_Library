@@ -48,7 +48,7 @@ class Member extends User {
 	JSONArray books;
 
 	// New account
-	public Member( String userName, String password, String firstName, String lastName) {
+	public Member(String userName, String password, String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		setUserName(userName);
@@ -104,16 +104,14 @@ class Member extends User {
 
 				JSONObject member = membersArray.getJSONObject(i);
 				String uname = member.getString("username");
-				System.out.println(uname);
-				System.out.println(userName);
 				if (uname.equals(userName)) {
 					books = member.getJSONArray("books checked");
 					books.put(book);
-					
+
 					System.out.println("hi");
 				}
 			}
-			
+
 			System.out.println(membersJSON);
 
 			Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
