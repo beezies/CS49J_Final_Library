@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 
@@ -53,7 +54,7 @@ public class MemberPage extends JFrame implements ActionListener{
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1_1, -243, SpringLayout.SOUTH, getContentPane());
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BrowseBook bbp = new BrowseBook();
+				BrowseBook bbp = new BrowseBook(false);
 				dispose();
 			}
 		});

@@ -1,43 +1,75 @@
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.SystemColor;
+import java.awt.Font;
 
-public class AdminPage extends JFrame implements ActionListener {
 
+public class AdminPage extends JFrame implements ActionListener{
+	
 	public static void main(String[] args) {
-
-		AdminPage ap = new AdminPage();
+		AdminPage mp = new AdminPage();
 	}
-
+	
 	public AdminPage() {
+		
+		getContentPane().setBackground(SystemColor.info);
+		
+		JButton checkBtn = new JButton("View Users");
+		checkBtn.setVerticalAlignment(SwingConstants.TOP);
+		checkBtn.setFont(new Font("Arial", Font.PLAIN, 15));
+		checkBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CheckedOut cop = new CheckedOut();
+				dispose();
+			}
+		});
+		SpringLayout springLayout = new SpringLayout();
+		springLayout.putConstraint(SpringLayout.WEST, checkBtn, 87, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, checkBtn, -170, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, checkBtn, -95, SpringLayout.EAST, getContentPane());
+		getContentPane().setLayout(springLayout);
+		getContentPane().add(checkBtn);
+		
+		JButton odBtn = new JButton("All Overdue Books");
+		springLayout.putConstraint(SpringLayout.NORTH, odBtn, 48, SpringLayout.SOUTH, checkBtn);
+		springLayout.putConstraint(SpringLayout.WEST, odBtn, 87, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, odBtn, -95, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, odBtn, 0, SpringLayout.EAST, checkBtn);
+		odBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OverDue op = new OverDue();
+				dispose();
+			}
+		});
+		odBtn.setFont(new Font("Arial", Font.PLAIN, 15));
+		getContentPane().add(odBtn);
+		
+		JButton btnNewButton_1_1 = new JButton("View All Titles");
+		springLayout.putConstraint(SpringLayout.NORTH, checkBtn, 46, SpringLayout.SOUTH, btnNewButton_1_1);
+		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_1_1, 87, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1_1, -95, SpringLayout.EAST, getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_1_1, 59, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1_1, -243, SpringLayout.SOUTH, getContentPane());
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BrowseBook bbp = new BrowseBook();
+				dispose();
+			}
+		});
+		btnNewButton_1_1.setFont(new Font("Arial", Font.PLAIN, 15));
+		getContentPane().add(btnNewButton_1_1);
 		setTitle("Admin Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(700, 700);
-
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-		JPanel panel1 = new JPanel();
-		panel1.setBackground(Color.pink);
-		JPanel panel2 = new JPanel();
-		JPanel panel3 = new JPanel();
-		panel3.setBackground(Color.blue);
-		getContentPane().add(mainPanel);
-
-		mainPanel.add(panel1);
-		mainPanel.add(panel2);
-		mainPanel.add(panel3);
-
+		setSize(337, 368);
 		setVisible(true);
 	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
 }
