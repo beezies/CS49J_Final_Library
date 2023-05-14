@@ -9,7 +9,7 @@ import java.awt.Font;
 
 public class BrowseBook extends JFrame implements ActionListener{
 
-	public BrowseBook() {
+	public BrowseBook(boolean admin) {
 		setTitle("Browse Books");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

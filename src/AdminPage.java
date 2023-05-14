@@ -39,7 +39,7 @@ public class AdminPage extends JFrame implements ActionListener{
 		springLayout.putConstraint(SpringLayout.EAST, odBtn, 0, SpringLayout.EAST, checkBtn);
 		odBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OverDue op = new OverDue();
+				ViewOverdueADM op = new ViewOverdueADM();
 				dispose();
 			}
 		});
@@ -54,7 +54,7 @@ public class AdminPage extends JFrame implements ActionListener{
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1_1, -243, SpringLayout.SOUTH, getContentPane());
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BrowseBook bbp = new BrowseBook();
+				BrowseBook bbp = new BrowseBook(true);
 				dispose();
 			}
 		});
