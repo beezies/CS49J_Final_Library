@@ -1,6 +1,4 @@
 
-import java.awt.Desktop;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -10,45 +8,6 @@ import java.time.LocalDate;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.apache.commons.io.IOUtils;
-
-//abstract class Member implements Comparable<User>, canOpenFile {
-
-//	public static void main(String[] args) {
-////		Member n = new Member("bee", "via", "bri", "rog");
-//		Member n = new Member("bee", "via");
-//		n.returnBook("h", "h");
-//		n.returnBook("L", "l");
-//
-//	}
-//
-//	protected String userName;
-//	protected String password;
-//
-//	public void setUserName(String userName) {
-//		this.userName = userName;
-//	}
-//
-//	public void setPassword(String password) {
-//		this.password = password;
-//	}
-//
-//	abstract String getName();
-//
-//	abstract String getUserName();
-//
-//	abstract String getPassword();
-//	
-//	@Override
-//	public void openBook(String pdfName) {
-//		if (Desktop.isDesktopSupported()) {
-//			try {
-//				File myFile = new File(pdfName + ".pdf");
-//				Desktop.getDesktop().open(myFile);
-//			} catch (Exception ex) {
-//			}
-//		}
-//	}
-//}
 
 public class Member extends User {
 
@@ -244,34 +203,4 @@ public class Member extends User {
 
 }
 
-class AdminUser extends User {
 
-	private final String ADMIN_USER = "ADMIN";
-	private final String ADMIN_PASS = "ADMIN";
-
-	public AdminUser() {
-		setUserName(ADMIN_USER);
-		setPassword(ADMIN_PASS);
-	}
-
-	@Override
-	String getName() {
-		return "Admin User";
-	}
-
-	@Override
-	String getUserName() {
-		return ADMIN_USER;
-	}
-
-	@Override
-	String getPassword() {
-		return ADMIN_PASS;
-	}
-
-	@Override
-	public int compareTo(User o) {
-		return 0;
-	}
-
-}
