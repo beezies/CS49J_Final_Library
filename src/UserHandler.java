@@ -1,7 +1,8 @@
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,14 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class UserHandler {
-
-	public static void main(String[] args) {
-		try {
-			Member bri = (Member) validateUser("breezy", "beep");
-		} catch (IllegalArgumentException e) {
-			System.out.println("Wrong user or password");
-		}
-	}
 
 	private static String userFile = "Members.json";
 	private final static String ADMIN_USER = "ADMIN";
@@ -38,30 +31,29 @@ public class UserHandler {
 	}
 
 	private static boolean inSystem(String userName, String password) {
-		InputStream is;
 		boolean valid = false;
-		try {
-			is = new FileInputStream(UserHandler.getFileName());
-			String memberFileText = IOUtils.toString(is, "UTF-8");
-			JSONObject membersJSON = new JSONObject(memberFileText);
-			JSONArray membersArray = membersJSON.getJSONArray("members");
+		membersArrayJSON = getMembersArrayJSON();
 
-			for (int i = 0; i < membersArray.length(); i++) {
-				JSONObject member = membersArray.getJSONObject(i);
-				String uname = member.getString("username");
-				String pass = member.getString("password");
-				if (uname.equalsIgnoreCase(userName) && pass.equals(password)) {
-					valid = true;
-					break;
-				}
+		for (int i = 0; i < membersArrayJSON.length(); i++) {
+			JSONObject member = membersArrayJSON.getJSONObject(i);
+			String uname = member.getString("username");
+			String pass = member.getString("password");
+			if (uname.equalsIgnoreCase(userName) && pass.equals(password)) {
+				valid = true;
+				break;
 			}
-		} catch (Exception e) {
 		}
-
 		return valid;
 	}
 
-	public static JSONObject getMembersJSON() {
+	public static JSONArray getMembersArrayJSON() {
+		getMembersJSON();
+
+		membersArrayJSON = membersJSON.getJSONArray("members");
+		return membersArrayJSON;
+	}
+	
+	private static JSONObject getMembersJSON() {
 		try {
 
 			InputStream is;
@@ -76,17 +68,14 @@ public class UserHandler {
 	}
 
 	public static void updateUserFile(JSONArray members) throws IOException {
+		new FileOutputStream(getFileName()).close();
+		
 		membersArrayJSON = members;
 		membersJSON.remove("members");
 		membersJSON.put("members", membersArrayJSON);
+		System.out.println(membersJSON);
+		
 		Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
-	}
-
-	public static JSONArray getMembersJSONArray() {
-		getMembersJSON();
-
-		membersArrayJSON = membersJSON.getJSONArray("members");
-		return membersArrayJSON;
 	}
 
 	public static Path getFilePath() {

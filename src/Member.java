@@ -8,10 +8,8 @@ import org.json.JSONArray;
 public class Member extends User {
 
 	public static void main(String[] args) {
-//		Member d = new Member("geek", "nerd", "dima", "smyr");
-//		Member b = new Member("bee", "via", "bri", "rog");
 		Member bee = new Member("bee", "via");
-		bee.checkout("willow", "hunter");
+		bee.returnBook("luz", "amity");
 	}
 
 	private String firstName;
@@ -56,7 +54,7 @@ public class Member extends User {
 	 */
 	private void addToFile() throws IllegalArgumentException {
 
-		JSONArray membersArray = UserHandler.getMembersJSONArray();
+		JSONArray membersArray = UserHandler.getMembersArrayJSON();
 		memberJSON = new JSONObject();
 		booksJSON = new JSONArray();
 
@@ -88,7 +86,7 @@ public class Member extends User {
 	 */
 	private void setMemberJSON() {
 
-		JSONArray membersArray = UserHandler.getMembersJSONArray();
+		JSONArray membersArray = UserHandler.getMembersArrayJSON();
 
 		for (int i = 0; i < membersArray.length(); i++) {
 
@@ -138,7 +136,7 @@ public class Member extends User {
 	 */
 	public void handleBook(JSONObject book, String action) {
 
-		JSONArray membersArray = UserHandler.getMembersJSONArray();
+		JSONArray membersArray = UserHandler.getMembersArrayJSON();
 
 		for (int i = 0; i < membersArray.length(); i++) {
 
