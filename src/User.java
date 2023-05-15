@@ -43,4 +43,34 @@ interface CanOpenFile {
 
 }
 
+class AdminUser extends User {
 
+	private final String ADMIN_USER = "ADMIN";
+	private final String ADMIN_PASS = "ADMIN";
+
+	public AdminUser() {
+		setUserName(ADMIN_USER);
+		setPassword(ADMIN_PASS);
+	}
+
+	@Override
+	String getName() {
+		return "Admin User";
+	}
+
+	@Override
+	String getUserName() {
+		return ADMIN_USER;
+	}
+
+	@Override
+	String getPassword() {
+		return ADMIN_PASS;
+	}
+
+	@Override
+	public int compareTo(User o) {
+		return 0;
+	}
+
+}
