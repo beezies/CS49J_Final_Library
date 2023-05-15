@@ -1,4 +1,6 @@
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -12,7 +14,9 @@ import org.apache.commons.io.IOUtils;
 abstract class User implements Comparable<User> {
 
 	public static void main(String[] args) {
-		Member m = new Member("ebb", "ell", "emm", "epp");
+		Member m = new Member("mmmm", "ell", "emm", "epp");
+
+		m.openBook("CS-49J-notes");
 
 	}
 
@@ -33,6 +37,15 @@ abstract class User implements Comparable<User> {
 
 	abstract String getPassword();
 
+	protected void openBook(String pdfName) {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				File myFile = new File(pdfName + ".pdf");
+				Desktop.getDesktop().open(myFile);
+			} catch (Exception ex) {
+			}
+		}
+	}
 }
 
 class Member extends User {
@@ -97,6 +110,20 @@ class Member extends User {
 		book.put("author", author);
 		book.put("checkout date", LocalDate.now().toString());
 
+		handleBook(book, "checkout");
+	}
+
+	public void returnBook(String title, String author) {
+
+		JSONObject book = new JSONObject();
+		book.put("title", title);
+		book.put("author", author);
+		book.put("checkout date", LocalDate.now().toString());
+
+		handleBook(book, "return");
+	}
+
+	public void handleBook(JSONObject book, String action) {
 		try {
 			InputStream is = new FileInputStream(UserHandler.getFileName());
 			String memberFileText = IOUtils.toString(is, "UTF-8");
@@ -105,23 +132,34 @@ class Member extends User {
 
 			for (int i = 0; i < membersArray.length(); i++) {
 
-				JSONObject member = membersArray.getJSONObject(i);
-				String uname = member.getString("username");
+				memberJSON = membersArray.getJSONObject(i);
+				String uname = memberJSON.getString("username");
 				if (uname.equals(userName)) {
-					books = member.getJSONArray("books checked");
-					books.put(book);
+					books = memberJSON.getJSONArray("books checked");
 
-					System.out.println("hi");
+					switch (action) {
+					case "checkout":
+						books.put(book);
+						break;
+					case "return":
+						for (int j = 0; j < books.length(); j++) {
+							JSONObject bookJSON = books.getJSONObject(j);
+							String title = bookJSON.getString("title");
+							String author = bookJSON.getString("author");
+							if (title.equals(book.getString("title")) && author.equals(book.getString("author"))) {
+								books.remove(j);
+							}
+						}
+						break;
+					case "open":
+						openBook(book.getString("title") + book.getString("author"));
+					}
+
 				}
 			}
 
-			System.out.println(membersJSON);
-
 			Files.write(UserHandler.getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
-		} catch (
-
-		Exception e1) {
-			e1.printStackTrace();
+		} catch (Exception e1) {
 		}
 	}
 
