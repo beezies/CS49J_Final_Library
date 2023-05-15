@@ -14,9 +14,8 @@ import org.apache.commons.io.IOUtils;
 abstract class User implements Comparable<User> {
 
 	public static void main(String[] args) {
-		Member m = new Member("mmmm", "ell", "emm", "epp");
-
-		m.openBook("CS-49J-notes");
+		Member n = new Member("bee", "via");
+		n.checkout("amity", "luz");
 
 	}
 
@@ -53,7 +52,7 @@ class Member extends User {
 	private String firstName;
 	private String lastName;
 	JSONObject memberJSON;
-	JSONArray books;
+	JSONArray booksJSON;
 
 	// New account
 	public Member(String userName, String password, String firstName, String lastName) throws IllegalArgumentException {
@@ -62,19 +61,20 @@ class Member extends User {
 		setUserName(userName);
 		setPassword(password);
 
-		memberJSON = new JSONObject();
-		books = new JSONArray();
-
 		addToFile();
 	}
 
-	// Quick constructor for login
+	// Quick constructor for login 
 	public Member(String userName, String password) {
 		setUserName(userName);
 		setPassword(password);
+		getMemberJSON();
 	}
 
 	private void addToFile() throws IllegalArgumentException {
+		
+		memberJSON = new JSONObject();
+		booksJSON = new JSONArray();
 
 		try {
 			InputStream is = new FileInputStream(UserHandler.getFileName());
@@ -94,7 +94,7 @@ class Member extends User {
 			memberJSON.put("password", password);
 			memberJSON.put("first name", firstName);
 			memberJSON.put("last name", lastName);
-			memberJSON.put("books checked", books);
+			memberJSON.put("books checked", booksJSON);
 
 			membersArray.put(memberJSON);
 
@@ -102,6 +102,29 @@ class Member extends User {
 		} catch (Exception e1) {
 			throw new IllegalArgumentException();
 		}
+	}
+	
+	private void getMemberJSON() {
+		try {
+			InputStream is = new FileInputStream(UserHandler.getFileName());
+			String memberFileText = IOUtils.toString(is, "UTF-8");
+			JSONObject membersJSON = new JSONObject(memberFileText);
+			JSONArray membersArray = membersJSON.getJSONArray("members");
+
+			for (int i = 0; i < membersArray.length(); i++) {
+
+				JSONObject mem = membersArray.getJSONObject(i);
+				String uname = mem.getString("username");
+				if (uname.equals(userName)) {
+					memberJSON = mem;
+					booksJSON = memberJSON.getJSONArray("books checked");
+				}
+			}
+			
+			System.out.println(membersJSON);
+		} catch (Exception e1) {
+		}
+		
 	}
 
 	public void checkout(String title, String author) {
@@ -111,6 +134,15 @@ class Member extends User {
 		book.put("checkout date", LocalDate.now().toString());
 
 		handleBook(book, "checkout");
+	}
+
+	public void readBook(String title, String author) {
+		JSONObject book = new JSONObject();
+		book.put("title", title);
+		book.put("author", author);
+		book.put("checkout date", LocalDate.now().toString());
+
+		handleBook(book, "open");
 	}
 
 	public void returnBook(String title, String author) {
@@ -135,32 +167,37 @@ class Member extends User {
 				memberJSON = membersArray.getJSONObject(i);
 				String uname = memberJSON.getString("username");
 				if (uname.equals(userName)) {
-					books = memberJSON.getJSONArray("books checked");
+					booksJSON = memberJSON.getJSONArray("books checked");
 
 					switch (action) {
 					case "checkout":
-						books.put(book);
+						booksJSON.put(book);
 						break;
 					case "return":
-						for (int j = 0; j < books.length(); j++) {
-							JSONObject bookJSON = books.getJSONObject(j);
-							String title = bookJSON.getString("title");
-							String author = bookJSON.getString("author");
-							if (title.equals(book.getString("title")) && author.equals(book.getString("author"))) {
-								books.remove(j);
-							}
-						}
+						if (hasBook(book) >= 0)
+							booksJSON.remove(hasBook(book));
 						break;
 					case "open":
-						openBook(book.getString("title") + book.getString("author"));
+						if (hasBook(book) >= 0)
+							openBook(book.getString("title") + book.getString("author"));
 					}
-
 				}
 			}
-
 			Files.write(UserHandler.getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
 		} catch (Exception e1) {
 		}
+	}
+
+	private int hasBook(JSONObject book) {
+		for (int j = 0; j < booksJSON.length(); j++) {
+			JSONObject bookJSON = booksJSON.getJSONObject(j);
+			String title = bookJSON.getString("title");
+			String author = bookJSON.getString("author");
+			if (title.equals(book.getString("title")) && author.equals(book.getString("author"))) {
+				return j;
+			}
+		}
+		return -1;
 	}
 
 	@Override
