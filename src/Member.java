@@ -7,11 +7,6 @@ import org.json.JSONArray;
 
 public class Member extends User {
 
-	public static void main(String[] args) {
-		Member bee = new Member("bee", "via");
-		bee.returnBook("luz", "amity");
-	}
-
 	private String firstName;
 	private String lastName;
 	JSONObject memberJSON;
@@ -98,7 +93,6 @@ public class Member extends User {
 			}
 		}
 
-		System.out.println(memberJSON);
 	}
 
 	public void checkout(String title, String author) {
@@ -106,7 +100,6 @@ public class Member extends User {
 		book.put("title", title);
 		book.put("author", author);
 		book.put("checkout date", LocalDate.now().toString());
-		System.out.println("book to check: " + book);
 
 		handleBook(book, "checkout");
 	}
@@ -141,7 +134,6 @@ public class Member extends User {
 		for (int i = 0; i < membersArray.length(); i++) {
 
 			JSONObject mem = membersArray.getJSONObject(i);
-			System.out.println("User " + i + ":" + mem);
 			String uname = mem.getString("username");
 			if (uname.equals(userName)) {
 				memberJSON = mem;
@@ -199,12 +191,6 @@ public class Member extends User {
 
 		if (o == this)
 			return 0;
-
-		int nameDiff = (o.getName().compareTo(this.getName()));
-		if (nameDiff > 0)
-			return 1;
-		else if (nameDiff < 0)
-			return -1;
 
 		int userNameDiff = (o.getUserName().compareTo(this.getUserName()));
 		if (userNameDiff > 0)
