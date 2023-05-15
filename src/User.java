@@ -3,11 +3,6 @@ import java.io.File;
 
 abstract class User implements Comparable<User>, CanOpenFile {
 
-	public static void main(String[] args) {
-		Member n = new Member("bee", "via");
-
-	}
-
 	protected String userName;
 	protected String password;
 

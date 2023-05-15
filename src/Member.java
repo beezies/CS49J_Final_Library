@@ -1,15 +1,18 @@
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-import org.apache.commons.io.IOUtils;
 
 public class Member extends User {
+
+	public static void main(String[] args) {
+//		Member d = new Member("geek", "nerd", "dima", "smyr");
+//		Member b = new Member("bee", "via", "bri", "rog");
+		Member bee = new Member("bee", "via");
+		bee.checkout("willow", "hunter");
+	}
 
 	private String firstName;
 	private String lastName;
@@ -47,67 +50,57 @@ public class Member extends User {
 	}
 
 	/**
-	 * Adds newly constructed user to JSON file
+	 * Creates JSON object for user and adds newly constructed user to JSON file
 	 * 
 	 * @throws IllegalArgumentException
 	 */
 	private void addToFile() throws IllegalArgumentException {
 
+		JSONArray membersArray = UserHandler.getMembersJSONArray();
 		memberJSON = new JSONObject();
 		booksJSON = new JSONArray();
 
-		try {
-			InputStream is = new FileInputStream(UserHandler.getFileName());
-			String memberFileText = IOUtils.toString(is, "UTF-8");
-			JSONObject membersJSON = new JSONObject(memberFileText);
-			JSONArray membersArray = membersJSON.getJSONArray("members");
-
-			for (int i = 0; i < membersArray.length(); i++) {
-				JSONObject member = membersArray.getJSONObject(i);
-				String uname = member.getString("username");
-				if (uname.equals(userName)) {
-					throw new IllegalArgumentException();
-				}
+		for (int i = 0; i < membersArray.length(); i++) {
+			JSONObject member = membersArray.getJSONObject(i);
+			String uname = member.getString("username");
+			if (uname.equals(userName)) {
+				throw new IllegalArgumentException();
 			}
-
-			memberJSON.put("username", userName);
-			memberJSON.put("password", password);
-			memberJSON.put("first name", firstName);
-			memberJSON.put("last name", lastName);
-			memberJSON.put("books checked", booksJSON);
-
-			membersArray.put(memberJSON);
-
-			Files.write(UserHandler.getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
-		} catch (Exception e1) {
-			throw new IllegalArgumentException();
 		}
+
+		memberJSON.put("username", userName);
+		memberJSON.put("password", password);
+		memberJSON.put("first name", firstName);
+		memberJSON.put("last name", lastName);
+		memberJSON.put("books checked", booksJSON);
+
+		membersArray.put(memberJSON);
+
+		try {
+			UserHandler.updateUserFile(membersArray);
+		} catch (Exception e) {
+		}
+
 	}
 
 	/**
 	 * Instantiates JSON objects for user from users file
 	 */
 	private void setMemberJSON() {
-		try {
-			InputStream is = new FileInputStream(UserHandler.getFileName());
-			String memberFileText = IOUtils.toString(is, "UTF-8");
-			JSONObject membersJSON = new JSONObject(memberFileText);
-			JSONArray membersArray = membersJSON.getJSONArray("members");
 
-			for (int i = 0; i < membersArray.length(); i++) {
+		JSONArray membersArray = UserHandler.getMembersJSONArray();
 
-				JSONObject mem = membersArray.getJSONObject(i);
-				String uname = mem.getString("username");
-				if (uname.equals(userName)) {
-					memberJSON = mem;
-					booksJSON = memberJSON.getJSONArray("books checked");
-				}
+		for (int i = 0; i < membersArray.length(); i++) {
+
+			JSONObject mem = membersArray.getJSONObject(i);
+			String uname = mem.getString("username");
+			if (uname.equals(userName)) {
+				memberJSON = mem;
+				booksJSON = memberJSON.getJSONArray("books checked");
 			}
-
-			System.out.println(membersJSON);
-		} catch (Exception e1) {
 		}
 
+		System.out.println(memberJSON);
 	}
 
 	public void checkout(String title, String author) {
@@ -115,6 +108,7 @@ public class Member extends User {
 		book.put("title", title);
 		book.put("author", author);
 		book.put("checkout date", LocalDate.now().toString());
+		System.out.println("book to check: " + book);
 
 		handleBook(book, "checkout");
 	}
@@ -137,36 +131,41 @@ public class Member extends User {
 		handleBook(book, "return");
 	}
 
+	/**
+	 * Uses a switch to perform the desired action on a given book.
+	 * @param book
+	 * @param action
+	 */
 	public void handleBook(JSONObject book, String action) {
-		try {
-			InputStream is = new FileInputStream(UserHandler.getFileName());
-			String memberFileText = IOUtils.toString(is, "UTF-8");
-			JSONObject membersJSON = new JSONObject(memberFileText);
-			JSONArray membersArray = membersJSON.getJSONArray("members");
 
-//			for (int i = 0; i < membersArray.length(); i++) {
+		JSONArray membersArray = UserHandler.getMembersJSONArray();
 
-//				JSONObject mem = membersArray.getJSONObject(i);
-//				String uname = mem.getString("username");
-//				if (uname.equals(userName)) {
-			booksJSON = memberJSON.getJSONArray("books checked");
+		for (int i = 0; i < membersArray.length(); i++) {
 
-			switch (action) {
-			case "checkout":
-				booksJSON.put(book);
-				break;
-			case "return":
-				if (hasBook(book) >= 0)
-					booksJSON.remove(hasBook(book));
-				break;
-			case "open":
-				if (hasBook(book) >= 0)
-					openBook(book.getString("title") + book.getString("author"));
+			JSONObject mem = membersArray.getJSONObject(i);
+			System.out.println("User " + i + ":" + mem);
+			String uname = mem.getString("username");
+			if (uname.equals(userName)) {
+				memberJSON = mem;
+				booksJSON = memberJSON.getJSONArray("books checked");
+
+				switch (action) {
+				case "checkout":
+					booksJSON.put(book);
+					break;
+				case "return":
+					if (hasBook(book) >= 0)
+						booksJSON.remove(hasBook(book));
+					break;
+				case "open":
+					if (hasBook(book) >= 0)
+						openBook(book.getString("title") + book.getString("author"));
+				}
 			}
-			// }
-//			}
-			Files.write(UserHandler.getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
-		} catch (Exception e1) {
+		}
+		try {
+			UserHandler.updateUserFile(membersArray);
+		} catch (IOException e) {
 		}
 	}
 

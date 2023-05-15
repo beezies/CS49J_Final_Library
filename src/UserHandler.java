@@ -1,7 +1,11 @@
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
@@ -20,6 +24,8 @@ public class UserHandler {
 	private static String userFile = "Members.json";
 	private final static String ADMIN_USER = "ADMIN";
 	private final static String ADMIN_PASS = "ADMIN";
+	private static JSONObject membersJSON;
+	private static JSONArray membersArrayJSON;
 
 	public static User validateUser(String userName, String password) throws IllegalArgumentException {
 
@@ -53,6 +59,34 @@ public class UserHandler {
 		}
 
 		return valid;
+	}
+
+	public static JSONObject getMembersJSON() {
+		try {
+
+			InputStream is;
+			is = new FileInputStream(getFileName());
+			String memberFileText = IOUtils.toString(is, "UTF-8");
+			membersJSON = new JSONObject(memberFileText);
+			return membersJSON;
+
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	public static void updateUserFile(JSONArray members) throws IOException {
+		membersArrayJSON = members;
+		membersJSON.remove("members");
+		membersJSON.put("members", membersArrayJSON);
+		Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
+	}
+
+	public static JSONArray getMembersJSONArray() {
+		getMembersJSON();
+
+		membersArrayJSON = membersJSON.getJSONArray("members");
+		return membersArrayJSON;
 	}
 
 	public static Path getFilePath() {
