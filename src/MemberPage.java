@@ -9,7 +9,7 @@ import java.awt.Font;
 public class MemberPage extends JFrame implements ActionListener{
 	
 	public static void main(String[] args) {
-		MemberPage mp = new MemberPage(null);
+		MemberPage mp = new MemberPage(new Member("bee", "via"));
 	}
 	
 	public MemberPage(Member m) {
@@ -21,7 +21,7 @@ public class MemberPage extends JFrame implements ActionListener{
 		checkBtn.setFont(new Font("Arial", Font.PLAIN, 15));
 		checkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CheckedOut cop = new CheckedOut(new Member(m.getUserName(), m.getPassword()));
+				CheckedOut c = new CheckedOut(m);
 				dispose();
 			}
 		});
@@ -40,7 +40,7 @@ public class MemberPage extends JFrame implements ActionListener{
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1_1, -243, SpringLayout.SOUTH, getContentPane());
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BrowseBook bbp = new BrowseBook(new Member(m.getUserName(), m.getPassword()));
+				BrowseBook b = new BrowseBook(m);
 				dispose();
 			}
 		});

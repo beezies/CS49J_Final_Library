@@ -6,6 +6,11 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 public class Member extends User {
+	
+	public static void main(String[] args) {
+		Member dee = new Member("geek", "nerd");
+		dee.returnBook("CS-49J-", "notes");
+	}
 
 	private String firstName;
 	private String lastName;
@@ -144,8 +149,9 @@ public class Member extends User {
 					booksJSON.put(book);
 					break;
 				case "return":
-					if (hasBook(book) >= 0)
-						booksJSON.remove(hasBook(book));
+					int idx = hasBook(book);
+					if (idx >= 0)
+						booksJSON.remove(idx);
 					break;
 				case "open":
 					if (hasBook(book) >= 0)

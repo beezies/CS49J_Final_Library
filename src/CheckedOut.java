@@ -13,7 +13,8 @@ import java.awt.SystemColor;
 public class CheckedOut extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
-		CheckedOut co = new CheckedOut(new Member("bee", "via"));
+		Member m = new Member("bee", "via");
+		CheckedOut co = new CheckedOut(m);
 	}
 
 	String[] cols = { "Title", "Author", "Checkout Date" };
@@ -54,7 +55,7 @@ public class CheckedOut extends JFrame implements ActionListener {
 		bookData = BookUtils.getMembersBooks(m);
 
 		final JTable table = new JTable(bookData, cols);
-		table.setPreferredScrollableViewportSize(new Dimension(300, 200));
+		table.setPreferredScrollableViewportSize(new Dimension(350, 200));
 		table.setFillsViewportHeight(true);
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -70,17 +71,37 @@ public class CheckedOut extends JFrame implements ActionListener {
 
 		JButton btnNewButton_1 = new JButton("Return Book");
 		JLabel newReturnMsg = new JLabel("Returned Successfully!");
+		newReturnMsg.setVisible(false);
+		layout.putConstraint(SpringLayout.SOUTH, newReturnMsg, -15, SpringLayout.SOUTH, contentPane);
+		layout.putConstraint(SpringLayout.EAST, newReturnMsg, -200, SpringLayout.EAST, contentPane);
+
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == btnNewButton_1) {
-					m.returnBook(selectedBook[1], selectedBook[2]);
-					contentPane.add(newReturnMsg);
+					m.returnBook(selectedBook[0], selectedBook[1]);
+					newReturnMsg.setVisible(true);
+				}
+			}
+		});
+		
+		contentPane.add(newReturnMsg);
+
+
+		JButton openButton = new JButton("Open Book");
+		openButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == openButton) {
+					m.readBook(selectedBook[0], selectedBook[1]);
 				}
 			}
 		});
 		layout.putConstraint(SpringLayout.SOUTH, btnNewButton_1, -10, SpringLayout.SOUTH, contentPane);
 		layout.putConstraint(SpringLayout.EAST, btnNewButton_1, -10, SpringLayout.EAST, contentPane);
+		layout.putConstraint(SpringLayout.WEST, openButton, 10, SpringLayout.WEST, contentPane);
+		layout.putConstraint(SpringLayout.SOUTH, openButton, -10, SpringLayout.SOUTH, contentPane);
+
 		contentPane.add(btnNewButton_1);
+		contentPane.add(openButton);
 
 		setVisible(true);
 

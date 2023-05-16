@@ -72,7 +72,6 @@ public class UserHandler {
 		membersArrayJSON = members;
 		membersJSON.remove("members");
 		membersJSON.put("members", membersArrayJSON);
-		System.out.println(membersJSON);
 		
 		Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
 	}

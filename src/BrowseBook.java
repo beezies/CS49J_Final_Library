@@ -15,7 +15,7 @@ import javax.swing.SpringLayout;
 
 public class BrowseBook extends JFrame implements ActionListener {
 
-	String[] cols = {"Title", "Author", "Genre" };
+	String[] cols = { "Title", "Author", "Genre" };
 	String[][] bookData;
 	String[] selectedBook;
 
@@ -43,12 +43,17 @@ public class BrowseBook extends JFrame implements ActionListener {
 		JButton back = new JButton("Back");
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MemberPage mp = new MemberPage((Member) u);
+				if (u.getUserName().equals("ADMIN")) {
+					AdminPage a = new AdminPage();
+				} else {
+					Member m = new Member(u.getUserName(), u.getPassword());
+					MemberPage mp = new MemberPage(m);
+				}
 				dispose();
 			}
 		});
 
-		final JTable table = new JTable(bookData, cols);
+		JTable table = new JTable(bookData, cols);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 250));
 		table.setFillsViewportHeight(true);
 		table.addMouseListener(new MouseAdapter() {
@@ -72,7 +77,6 @@ public class BrowseBook extends JFrame implements ActionListener {
 		newCheckoutMsg.setVisible(false);
 		mainPanel.add(newCheckoutMsg);
 		checkout.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == checkout) {
 					Member m = new Member(u.getUserName(), u.getPassword());
