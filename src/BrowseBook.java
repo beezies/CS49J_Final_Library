@@ -15,7 +15,7 @@ import javax.swing.SpringLayout;
 
 public class BrowseBook extends JFrame implements ActionListener {
 
-	String[] cols = { "#", "Title", "Author", "Genre" };
+	String[] cols = {"Title", "Author", "Genre" };
 	String[][] bookData;
 	String[] selectedBook;
 
@@ -25,7 +25,7 @@ public class BrowseBook extends JFrame implements ActionListener {
 	}
 
 	public BrowseBook(User u) {
-		bookData = Book.getBookArray();
+		bookData = BookUtils.getBookArray();
 
 		setTitle("Browse Books");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,8 +43,7 @@ public class BrowseBook extends JFrame implements ActionListener {
 		JButton back = new JButton("Back");
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Member user = null;
-				MemberPage mp = new MemberPage(user);
+				MemberPage mp = new MemberPage((Member) u);
 				dispose();
 			}
 		});

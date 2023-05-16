@@ -170,6 +170,10 @@ public class Member extends User {
 		}
 		return -1;
 	}
+	
+	public JSONArray getBooks() {
+		return booksJSON;
+	}
 
 	@Override
 	String getName() {

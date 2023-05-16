@@ -85,7 +85,8 @@ public class LoginPage extends JFrame implements ActionListener {
 				if (user.getName().equals("Admin User")) {
 					AdminPage ap = new AdminPage();
 				} else {
-					MemberPage mp = new MemberPage((Member) user);
+					Member m = (Member) user;
+					MemberPage mp = new MemberPage(m);
 				}
 
 			} catch (IllegalArgumentException i) {

@@ -21,7 +21,6 @@ public class AdminPage extends JFrame implements ActionListener{
 		checkBtn.setFont(new Font("Arial", Font.PLAIN, 15));
 		checkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CheckedOut cop = new CheckedOut();
 				dispose();
 			}
 		});

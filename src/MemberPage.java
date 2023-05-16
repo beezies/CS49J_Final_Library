@@ -21,7 +21,7 @@ public class MemberPage extends JFrame implements ActionListener{
 		checkBtn.setFont(new Font("Arial", Font.PLAIN, 15));
 		checkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CheckedOut cop = new CheckedOut();
+				CheckedOut cop = new CheckedOut(new Member(m.getUserName(), m.getPassword()));
 				dispose();
 			}
 		});
@@ -32,20 +32,6 @@ public class MemberPage extends JFrame implements ActionListener{
 		getContentPane().setLayout(springLayout);
 		getContentPane().add(checkBtn);
 		
-		JButton odBtn = new JButton("Overdue");
-		springLayout.putConstraint(SpringLayout.NORTH, odBtn, 48, SpringLayout.SOUTH, checkBtn);
-		springLayout.putConstraint(SpringLayout.WEST, odBtn, 87, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, odBtn, -95, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, odBtn, 0, SpringLayout.EAST, checkBtn);
-		odBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OverDue op = new OverDue();
-				dispose();
-			}
-		});
-		odBtn.setFont(new Font("Arial", Font.PLAIN, 15));
-		getContentPane().add(odBtn);
-		
 		JButton btnNewButton_1_1 = new JButton("Browse Books");
 		springLayout.putConstraint(SpringLayout.NORTH, checkBtn, 46, SpringLayout.SOUTH, btnNewButton_1_1);
 		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_1_1, 87, SpringLayout.WEST, getContentPane());
@@ -54,7 +40,7 @@ public class MemberPage extends JFrame implements ActionListener{
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1_1, -243, SpringLayout.SOUTH, getContentPane());
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BrowseBook bbp = new BrowseBook(m);
+				BrowseBook bbp = new BrowseBook(new Member(m.getUserName(), m.getPassword()));
 				dispose();
 			}
 		});
