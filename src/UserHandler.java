@@ -84,15 +84,14 @@ public class UserHandler {
 		return userFile;
 	}
 
-	public static String[][] twoDArrayFromMembers(Member[] memsArr) {
-		String[][] arr = new String[memsArr.length][4];
+	public static String[][] makeTwoDArray(Member[] memsArr) {
+		String[][] arr = new String[memsArr.length][3];
 
 		for (int i = 0; i < memsArr.length; i++) {
 			Member m = memsArr[i];
 			arr[i][0] = m.getUserName();
-			arr[i][1] = m.getPassword();
-			arr[i][2] = m.getName();
-			arr[i][3] = Integer.toString(m.getBooks().length());
+			arr[i][1] = m.getName();
+			arr[i][2] = Integer.toString(m.getBooks().length());
 		}
 		return arr;
 	}

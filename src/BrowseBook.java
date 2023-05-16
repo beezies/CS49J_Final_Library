@@ -19,11 +19,6 @@ public class BrowseBook extends JFrame implements ActionListener {
 	String[][] bookData;
 	String[] selectedBook;
 
-	public static void main(String[] args) {
-		BrowseBook at = new BrowseBook(new Member("bee", "via"));
-
-	}
-
 	public BrowseBook(User u) {
 		bookData = BookUtils.getBookArray();
 

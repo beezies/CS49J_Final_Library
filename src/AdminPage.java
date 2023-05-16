@@ -39,13 +39,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		getContentPane().setLayout(springLayout);
 		checkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (Desktop.isDesktopSupported()) {
-					try {
-						File file = new File("Members.json");
-						Desktop.getDesktop().open(file);
-					} catch (Exception ex) {
-					}
-				}
+				UsersScreen u = new UsersScreen();
 			}
 		});
 

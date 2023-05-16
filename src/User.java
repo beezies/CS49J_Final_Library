@@ -21,10 +21,10 @@ abstract class User implements Comparable<User>, CanOpenFile {
 	abstract String getPassword();
 
 	@Override
-	public void openBook(String pdfName) {
+	public void openFile(String fileName) {
 		if (Desktop.isDesktopSupported()) {
 			try {
-				File myFile = new File(pdfName + ".pdf");
+				File myFile = new File(fileName);
 				Desktop.getDesktop().open(myFile);
 			} catch (Exception ex) {
 			}
@@ -34,7 +34,7 @@ abstract class User implements Comparable<User>, CanOpenFile {
 
 interface CanOpenFile {
 
-	public void openBook(String pdfName);
+	public void openFile(String pdfName);
 
 }
 
