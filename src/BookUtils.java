@@ -26,12 +26,6 @@ public class BookUtils {
 
 			String[][] array = new String[lines.size()][3];
 			lines.toArray(array);
-
-			for (int i = 0; i < array.length; i++) {
-				for (int j = 0; j < array[i].length; j++) {
-					System.out.println(array[i][j]);
-				}
-			}
 			return array;
 		} catch (Exception e) {
 		}
@@ -40,6 +34,7 @@ public class BookUtils {
 
 	public static String[][] getMembersBooks(Member m) {
 		JSONArray booksJSON = m.getBooks();
+		System.out.println(booksJSON);
 		String[][] arr = new String[booksJSON.length()][3];
 		for (int i = 0; i < booksJSON.length(); i++) {
 			JSONObject book = booksJSON.getJSONObject(i);

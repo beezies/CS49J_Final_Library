@@ -76,7 +76,7 @@ public class BrowseBook extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == checkout) {
 					Member m = new Member(u.getUserName(), u.getPassword());
-					m.checkout(selectedBook[1], selectedBook[2]);
+					m.checkout(selectedBook[0], selectedBook[1]);
 					newCheckoutMsg.setVisible(true);
 				}
 			}
