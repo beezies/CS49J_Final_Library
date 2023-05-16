@@ -1,79 +1,102 @@
-
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import java.awt.SystemColor;
-import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SpringLayout;
 
-public class BrowseBook extends JFrame implements ActionListener{
+public class BrowseBook extends JFrame implements ActionListener {
 
-	public BrowseBook(boolean admin) {
+	String[] cols = { "#", "Title", "Author", "Genre" };
+	String[][] bookData;
+	String[] selectedBook;
+
+	public static void main(String[] args) {
+		BrowseBook at = new BrowseBook(new Member("bee", "via"));
+
+	}
+
+	public BrowseBook(User u) {
+		bookData = Book.getBookArray();
+
 		setTitle("Browse Books");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
 		setSize(600, 500);
-		setVisible(true);
-		JPanel contentPane = new JPanel();
-		contentPane.setBackground(SystemColor.info);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		
-		JButton backButton = new JButton("Back");
-		backButton.setFont(new Font("Arial", Font.PLAIN, 11));
-		backButton.setHorizontalAlignment(SwingConstants.LEFT);
-		backButton.addActionListener(new ActionListener() {
+
+		JPanel mainPanel = new JPanel();
+		SpringLayout layout = new SpringLayout();
+		mainPanel.setLayout(layout);
+
+		JLabel mainLabel = new JLabel("All Titles");
+		mainLabel.setFont(new Font("Serif", Font.PLAIN, 30));
+		layout.putConstraint(SpringLayout.WEST, mainLabel, 250, SpringLayout.WEST, mainPanel);
+		layout.putConstraint(SpringLayout.NORTH, mainLabel, 25, SpringLayout.NORTH, mainPanel);
+
+		JButton back = new JButton("Back");
+		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Member user = null;
 				MemberPage mp = new MemberPage(user);
 				dispose();
 			}
 		});
-		SpringLayout sl_contentPane = new SpringLayout();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, backButton, 0, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, backButton, 0, SpringLayout.WEST, contentPane);
-		contentPane.setLayout(sl_contentPane);
-		contentPane.add(backButton);
-		
-		JLabel lblNewLabel = new JLabel("Browse Books");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel, 10, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel, 48, SpringLayout.EAST, backButton);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblNewLabel, 33, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, lblNewLabel, -80, SpringLayout.EAST, contentPane);
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-		contentPane.add(lblNewLabel);
-		
-		JLabel newcheckoutMsg = new JLabel("<html>Enjoy! this book will be due on<br/>MM/DD/YYYY</html>");
-		newcheckoutMsg.setVisible(false);
-		
-		JButton btnNewButton = new JButton("Checkout");
-		btnNewButton.addActionListener(new ActionListener() {
+
+		final JTable table = new JTable(bookData, cols);
+		table.setPreferredScrollableViewportSize(new Dimension(500, 250));
+		table.setFillsViewportHeight(true);
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int row = table.getSelectedRow();
+				selectedBook = bookData[row];
+			}
+		});
+
+		JScrollPane scrollPane = new JScrollPane(table);
+		layout.putConstraint(SpringLayout.WEST, scrollPane, 50, SpringLayout.WEST, mainPanel);
+		layout.putConstraint(SpringLayout.NORTH, scrollPane, 80, SpringLayout.NORTH, mainPanel);
+
+		JButton checkout = new JButton("Check Out");
+		layout.putConstraint(SpringLayout.EAST, checkout, -10, SpringLayout.EAST, mainPanel);
+		layout.putConstraint(SpringLayout.SOUTH, checkout, -10, SpringLayout.SOUTH, mainPanel);
+		JLabel newCheckoutMsg = new JLabel("Enjoy, and please be sure to return this book within 2 weeks!");
+		layout.putConstraint(SpringLayout.SOUTH, newCheckoutMsg, -50, SpringLayout.SOUTH, mainPanel);
+		layout.putConstraint(SpringLayout.WEST, newCheckoutMsg, 100, SpringLayout.WEST, mainPanel);
+
+		newCheckoutMsg.setVisible(false);
+		mainPanel.add(newCheckoutMsg);
+		checkout.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == btnNewButton) 
-						newcheckoutMsg.setVisible(true);
-			
-		}});
-		
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnNewButton, -10, SpringLayout.SOUTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnNewButton, -10, SpringLayout.EAST, contentPane);
-		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 11));
-		contentPane.add(btnNewButton);
-		
-		sl_contentPane.putConstraint(SpringLayout.NORTH, newcheckoutMsg, -18, SpringLayout.NORTH, btnNewButton);
-		sl_contentPane.putConstraint(SpringLayout.WEST, newcheckoutMsg, 0, SpringLayout.WEST, backButton);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, newcheckoutMsg, 0, SpringLayout.SOUTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, newcheckoutMsg, -16, SpringLayout.WEST, btnNewButton);
-		newcheckoutMsg.setFont(new Font("Arial", Font.PLAIN, 15));
-		newcheckoutMsg.setHorizontalAlignment(SwingConstants.LEFT);
-		contentPane.add(newcheckoutMsg);
+				if (e.getSource() == checkout) {
+					Member m = new Member(u.getUserName(), u.getPassword());
+					m.checkout(selectedBook[1], selectedBook[2]);
+					newCheckoutMsg.setVisible(true);
+				}
+			}
+		});
+
+		mainPanel.add(back);
+		mainPanel.add(mainLabel);
+		mainPanel.add(scrollPane);
+		if (!u.getUserName().equals("ADMIN"))
+			mainPanel.add(checkout);
+
+		add(mainPanel);
+		setVisible(true);
+
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
+
 }

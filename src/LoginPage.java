@@ -31,7 +31,6 @@ public class LoginPage extends JFrame implements ActionListener {
 		usrField.setMaximumSize(new Dimension(500, usrField.getPreferredSize().height));
 		passField.setMaximumSize(new Dimension(500, passField.getPreferredSize().height));
 		loginButton.addActionListener(this);
-		errorLabel.setBackground(Color.red);
 
 		getContentPane().add(panel);
 		panel.add(new JLabel("                 "));

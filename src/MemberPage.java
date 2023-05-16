@@ -54,7 +54,7 @@ public class MemberPage extends JFrame implements ActionListener{
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1_1, -243, SpringLayout.SOUTH, getContentPane());
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BrowseBook bbp = new BrowseBook(false);
+				BrowseBook bbp = new BrowseBook(m);
 				dispose();
 			}
 		});
