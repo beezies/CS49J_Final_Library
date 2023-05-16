@@ -51,7 +51,7 @@ public class UserHandler {
 		membersArrayJSON = membersJSON.getJSONArray("members");
 		return membersArrayJSON;
 	}
-	
+
 	private static JSONObject getMembersJSON() {
 		try {
 
@@ -68,11 +68,11 @@ public class UserHandler {
 
 	public static void updateUserFile(JSONArray members) throws IOException {
 		new FileOutputStream(getFileName()).close();
-		
+
 		membersArrayJSON = members;
 		membersJSON.remove("members");
 		membersJSON.put("members", membersArrayJSON);
-		
+
 		Files.write(getFilePath(), membersJSON.toString().getBytes(), StandardOpenOption.WRITE);
 	}
 
@@ -82,6 +82,67 @@ public class UserHandler {
 
 	public static String getFileName() {
 		return userFile;
+	}
+
+	public static String[][] twoDArrayFromMembers(Member[] memsArr) {
+		String[][] arr = new String[memsArr.length][4];
+
+		for (int i = 0; i < memsArr.length; i++) {
+			Member m = memsArr[i];
+			arr[i][0] = m.getUserName();
+			arr[i][1] = m.getPassword();
+			arr[i][2] = m.getName();
+			arr[i][3] = Integer.toString(m.getBooks().length());
+		}
+		return arr;
+	}
+
+	public static Member[] getSortedMembersArray() {
+		JSONArray members = getMembersArrayJSON();
+		Member[] memsArr = new Member[members.length()];
+
+		for (int i = 0; i < members.length(); i++) {
+			JSONObject memJSON = members.getJSONObject(i);
+			String uname = memJSON.getString("username");
+			String pass = memJSON.getString("password");
+			memsArr[i] = new Member(uname, pass);
+		}
+
+		return quickSortArray(memsArr, 0, memsArr.length - 1);
+	}
+
+	private static Member[] quickSortArray(Member[] memsArr, int low, int high) {
+		if (low < high) {
+
+			int pivotPoint = section(memsArr, low, high);
+
+			quickSortArray(memsArr, low, pivotPoint - 1);
+			quickSortArray(memsArr, pivotPoint + 1, high);
+		}
+		return memsArr;
+	}
+
+	static int section(Member[] memsArr, int low, int high) {
+		Member pivot = memsArr[high];
+		
+		int i = (low - 1);
+
+		for (int j = low; j <= high - 1; j++) {
+
+			if (memsArr[j].compareTo(pivot) < 1) {
+				
+				i++;
+				swap(memsArr, i, j);
+			}
+		}
+		swap(memsArr, i + 1, high);
+		return (i + 1);
+	}
+
+	static void swap(Member[] arr, int i, int j) {
+		Member temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
 	}
 
 }

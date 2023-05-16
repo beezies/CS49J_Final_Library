@@ -2,6 +2,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 import org.json.JSONArray;
@@ -20,7 +21,7 @@ public class BookUtils {
 		try {
 			fis = new FileInputStream(fName);
 			DataInputStream input = new DataInputStream(fis);
-			ArrayList<String[]> lines = new ArrayList<String[]>();
+			LinkedList<String[]> lines = new LinkedList<String[]>();
 			while ((line = input.readLine()) != null) {
 				lines.add(line.split(","));
 			}

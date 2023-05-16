@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 public class Member extends User {
-	
+
 	public static void main(String[] args) {
 		Member dee = new Member("geek", "nerd");
 		dee.returnBook("CS-49J-", "notes");
@@ -95,6 +95,8 @@ public class Member extends User {
 			if (uname.equals(userName)) {
 				memberJSON = mem;
 				booksJSON = memberJSON.getJSONArray("books checked");
+				firstName = memberJSON.getString("first name");
+				lastName = memberJSON.getString("last name");
 			}
 		}
 
@@ -129,6 +131,7 @@ public class Member extends User {
 
 	/**
 	 * Uses a switch to perform the desired action on a given book.
+	 * 
 	 * @param book
 	 * @param action
 	 */
@@ -176,7 +179,7 @@ public class Member extends User {
 		}
 		return -1;
 	}
-	
+
 	public JSONArray getBooks() {
 		return booksJSON;
 	}
@@ -188,11 +191,13 @@ public class Member extends User {
 
 	@Override
 	String getUserName() {
+		setMemberJSON();
 		return userName;
 	}
 
 	@Override
 	String getPassword() {
+		setMemberJSON();
 		return password;
 	}
 
@@ -203,11 +208,17 @@ public class Member extends User {
 			return 0;
 
 		int userNameDiff = (o.getUserName().compareTo(this.getUserName()));
-		if (userNameDiff > 0)
+		if (userNameDiff < 0) {
 			return 1;
-		else if (userNameDiff < 0)
+		} else if (userNameDiff < 0)
 			return -1;
 
 		return 0;
+	}
+
+	public String toString() {
+		setMemberJSON();
+		return memberJSON.toString();
+
 	}
 }
