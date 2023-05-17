@@ -13,14 +13,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
 
-public class BrowseBook extends JFrame implements ActionListener {
+public class BrowseBook extends JFrame implements ActionListener, HasTable {
 
 	String[] cols = { "Title", "Author", "Genre" };
 	String[][] bookData;
 	String[] selectedBook;
 
 	public BrowseBook(User u) {
-		bookData = BookUtils.getBookArray();
 
 		setTitle("Browse Books");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,14 +46,16 @@ public class BrowseBook extends JFrame implements ActionListener {
 				dispose();
 			}
 		});
+		
+		String[][] data = getData();
 
-		JTable table = new JTable(bookData, cols);
+		JTable table = new JTable(data, cols);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 250));
 		table.setFillsViewportHeight(true);
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int row = table.getSelectedRow();
-				selectedBook = bookData[row];
+				selectedBook = data[row];
 			}
 		});
 
@@ -95,6 +96,11 @@ public class BrowseBook extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+	}
+
+	@Override
+	public String[][] getData() {
+		return BookUtils.getBookArray();
 	}
 
 }

@@ -10,7 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
 
-public class UsersScreen extends JFrame {
+public class UsersScreen extends JFrame implements HasTable {
 	
 	String[] cols = {"Username", "Full Name", "Books on Loan"};
 	String[][] userData;
@@ -41,11 +41,9 @@ public class UsersScreen extends JFrame {
 			}
 		});		
 		
-		Member[] mems = UserHandler.getSortedMembersArray();
-		userData = UserHandler.makeTwoDArray(mems);
+		String[][] data = getData();
 		
-		
-		JTable table = new JTable(userData, cols);
+		JTable table = new JTable(data, cols);
 		table.setPreferredScrollableViewportSize(new Dimension(400, 200));
 		table.setFillsViewportHeight(true);
 
@@ -58,6 +56,13 @@ public class UsersScreen extends JFrame {
 		mainPanel.add(scrollPane);
 		add(mainPanel);
 		setVisible(true);
+	}
+
+	@Override
+	public String[][] getData() {
+		Member[] mems = UserHandler.getSortedMembersArray();
+		userData = UserHandler.makeTwoDArray(mems);
+		return userData;
 	}
 
 }

@@ -10,13 +10,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.SystemColor;
 
-public class CheckedOut extends JFrame implements ActionListener {
+public class CheckedOut extends JFrame implements HasTable {
 
 	String[] cols = { "Title", "Author", "Checkout Date" };
 	String[][] bookData;
 	String[] selectedBook;
+	Member m;
 
 	public CheckedOut(Member m) {
+		this.m = m;
 		setTitle("Checked Out");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500, 400);
@@ -47,15 +49,15 @@ public class CheckedOut extends JFrame implements ActionListener {
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 		contentPane.add(lblNewLabel);
 
-		bookData = BookUtils.getMembersBooks(m);
+		String[][] data = getData();
 
-		final JTable table = new JTable(bookData, cols);
+		final JTable table = new JTable(data, cols);
 		table.setPreferredScrollableViewportSize(new Dimension(350, 200));
 		table.setFillsViewportHeight(true);
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int row = table.getSelectedRow();
-				selectedBook = bookData[row];
+				selectedBook = data[row];
 			}
 		});
 
@@ -103,9 +105,8 @@ public class CheckedOut extends JFrame implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+	public String[][] getData() {
+		return  BookUtils.getMembersBooks(m);
 	}
 
 }
