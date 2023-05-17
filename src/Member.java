@@ -153,7 +153,7 @@ public class Member extends User {
 					break;
 				case "open":
 					if (hasBook(book) >= 0)
-						openFile(book.getString("title") + book.getString("author") + ".pdf");
+						openFile(book.getString("title") + "-" + book.getString("author") + ".pdf");
 				}
 			}
 		}
