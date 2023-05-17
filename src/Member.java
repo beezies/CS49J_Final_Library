@@ -7,11 +7,6 @@ import org.json.JSONArray;
 
 public class Member extends User {
 
-	public static void main(String[] args) {
-		Member dee = new Member("geek", "nerd");
-		dee.returnBook("CS-49J-", "notes");
-	}
-
 	private String firstName;
 	private String lastName;
 	JSONObject memberJSON;

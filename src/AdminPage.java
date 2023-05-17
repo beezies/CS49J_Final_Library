@@ -1,18 +1,12 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.*;
 
 import java.awt.SystemColor;
-import java.awt.Desktop;
 import java.awt.Font;
 
 public class AdminPage extends JFrame implements ActionListener {
-
-	public static void main(String[] args) {
-		AdminPage mp = new AdminPage();
-	}
 
 	public AdminPage() {
 

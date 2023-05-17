@@ -7,10 +7,6 @@ import java.awt.Font;
 
 public class MemberPage extends JFrame implements ActionListener {
 
-	public static void main(String[] args) {
-		MemberPage mp = new MemberPage(new Member("bee", "via"));
-	}
-
 	public MemberPage(Member m) {
 
 		getContentPane().setBackground(SystemColor.info);

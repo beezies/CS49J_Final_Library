@@ -1,16 +1,11 @@
 import javax.swing.*;
 
-import java.util.InputMismatchException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.*;
 import java.awt.event.*;
 
 class SignUpPage extends JFrame implements ActionListener {
-
-	public static void main(String[] args) {
-		SignUpPage sup = new SignUpPage();
-	}
 
 	// Components of the Form
 	private JPanel panel;

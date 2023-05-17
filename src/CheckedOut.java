@@ -12,11 +12,6 @@ import java.awt.SystemColor;
 
 public class CheckedOut extends JFrame implements ActionListener {
 
-	public static void main(String[] args) {
-		Member m = new Member("bee", "via");
-		CheckedOut co = new CheckedOut(m);
-	}
-
 	String[] cols = { "Title", "Author", "Checkout Date" };
 	String[][] bookData;
 	String[] selectedBook;

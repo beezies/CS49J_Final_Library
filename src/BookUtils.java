@@ -1,7 +1,6 @@
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -9,10 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class BookUtils {
-
-	public static void main(String[] args) {
-		getBookArray();
-	}
 
 	public static String[][] getBookArray() {
 		String fName = "BookList.csv";
