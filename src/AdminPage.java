@@ -12,25 +12,35 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		getContentPane().setBackground(SystemColor.info);
 		SpringLayout springLayout = new SpringLayout();
-
+/*
+* Creating button to view all books
+*/
 		JButton btnNewButton_1_1 = new JButton("View All Titles");
 		btnNewButton_1_1.setFont(new Font("Arial", Font.PLAIN, 15));
 		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_1_1, 70, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1_1, -95, SpringLayout.EAST, getContentPane());
 		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_1_1, 59, SpringLayout.NORTH, getContentPane());
+/*
+* When button is clicked brings up browse book page
+*/		
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BrowseBook bbp = new BrowseBook(new AdminUser());
 				dispose();
 			}
 		});
-
+/*
+ * Creating button to view all users/members		
+ */
 		JButton checkBtn = new JButton("View Users");
 		checkBtn.setFont(new Font("Arial", Font.PLAIN, 15));
 		springLayout.putConstraint(SpringLayout.WEST, checkBtn, 70, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, checkBtn, -70, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, checkBtn, -95, SpringLayout.EAST, getContentPane());
 		getContentPane().setLayout(springLayout);
+/*
+ * When button is pressed brings up users screen
+ */
 		checkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UsersScreen u = new UsersScreen();
