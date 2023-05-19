@@ -16,7 +16,9 @@ public class CheckedOut extends JFrame implements HasTable {
 	String[][] bookData;
 	String[] selectedBook;
 	Member m;
-
+/*
+ * creating method to check out book
+ */
 	public CheckedOut(Member m) {
 		this.m = m;
 		setTitle("Checked Out");
@@ -29,7 +31,9 @@ public class CheckedOut extends JFrame implements HasTable {
 		setContentPane(contentPane);
 		SpringLayout layout = new SpringLayout();
 		contentPane.setLayout(layout);
-
+/*
+ * creating button to go back to previous screen
+ */
 		JButton btnNewButton = new JButton("Back");
 		layout.putConstraint(SpringLayout.EAST, btnNewButton, 65, SpringLayout.WEST, contentPane);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -50,7 +54,9 @@ public class CheckedOut extends JFrame implements HasTable {
 		contentPane.add(lblNewLabel);
 
 		String[][] data = getData();
-
+/*
+ * table showing books selected and that were checked out
+ */
 		final JTable table = new JTable(data, cols);
 		table.setPreferredScrollableViewportSize(new Dimension(350, 200));
 		table.setFillsViewportHeight(true);
@@ -65,13 +71,17 @@ public class CheckedOut extends JFrame implements HasTable {
 		layout.putConstraint(SpringLayout.WEST, scrollPane, 50, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.NORTH, scrollPane, 80, SpringLayout.NORTH, contentPane);
 		contentPane.add(scrollPane);
-
+/*
+ * creating button to return book
+ */
 		JButton btnNewButton_1 = new JButton("Return Book");
 		JLabel newReturnMsg = new JLabel("Returned Successfully!");
 		newReturnMsg.setVisible(false);
 		layout.putConstraint(SpringLayout.SOUTH, newReturnMsg, -15, SpringLayout.SOUTH, contentPane);
 		layout.putConstraint(SpringLayout.EAST, newReturnMsg, -200, SpringLayout.EAST, contentPane);
-
+/*
+ * when button is pressed currently owned book is returned into the book list
+ */
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == btnNewButton_1) {
@@ -83,7 +93,9 @@ public class CheckedOut extends JFrame implements HasTable {
 		
 		contentPane.add(newReturnMsg);
 
-
+/*
+ * button to open the selected book
+ */
 		JButton openButton = new JButton("Open Book");
 		openButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
