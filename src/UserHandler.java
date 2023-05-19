@@ -18,7 +18,9 @@ public class UserHandler {
 	private final static String ADMIN_PASS = "ADMIN";
 	private static JSONObject membersJSON;
 	private static JSONArray membersArrayJSON;
-
+/*
+ * checks if login information is correct for user/admin
+ */
 	public static User validateUser(String userName, String password) throws IllegalArgumentException {
 
 		if (userName.equals(ADMIN_USER) && password.equals(ADMIN_PASS)) {
@@ -28,7 +30,9 @@ public class UserHandler {
 		} else
 			throw new IllegalArgumentException();
 	}
-
+/*
+ * gets information from json file and checks if login was valid
+ */
 	private static boolean inSystem(String userName, String password) {
 		boolean valid = false;
 		membersArrayJSON = getMembersArrayJSON();
@@ -44,7 +48,9 @@ public class UserHandler {
 		}
 		return valid;
 	}
-
+/*
+ * creating json array
+ */
 	public static JSONArray getMembersArrayJSON() {
 		getMembersJSON();
 
@@ -65,7 +71,9 @@ public class UserHandler {
 		}
 		return null;
 	}
-
+/*
+ * updating user files method
+ */
 	public static void updateUserFile(JSONArray members) throws IOException {
 		new FileOutputStream(getFileName()).close();
 
@@ -95,7 +103,9 @@ public class UserHandler {
 		}
 		return arr;
 	}
-
+/*
+ * getting sorted members
+ */
 	public static Member[] getSortedMembersArray() {
 		JSONArray members = getMembersArrayJSON();
 		Member[] memsArr = new Member[members.length()];
@@ -109,7 +119,9 @@ public class UserHandler {
 
 		return quickSortArray(memsArr, 0, memsArr.length - 1);
 	}
-
+/*
+ * sorting members in order
+ */
 	private static Member[] quickSortArray(Member[] memsArr, int low, int high) {
 		if (low < high) {
 
@@ -137,7 +149,9 @@ public class UserHandler {
 		swap(memsArr, i + 1, high);
 		return (i + 1);
 	}
-
+/*
+ * swap members around
+ */
 	static void swap(Member[] arr, int i, int j) {
 		Member temp = arr[i];
 		arr[i] = arr[j];
