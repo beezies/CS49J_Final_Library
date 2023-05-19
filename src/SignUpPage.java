@@ -7,7 +7,16 @@ import java.awt.event.*;
 
 class SignUpPage extends JFrame implements ActionListener {
 
-	// Components of the Form
+// Components of the Form
+/**
+* Quick constructor for login
+* 
+* @param first name
+* @param last name
+* @param user name
+* @param password
+* @param confirming password
+*/
 	private JPanel panel;
 	private JLabel welcomeLabel;
 	private JLabel fn;
@@ -23,9 +32,12 @@ class SignUpPage extends JFrame implements ActionListener {
 	private JButton submit;
 	private JLabel endMessage;
 
-	// constructor, to initialize the components
-	// with default values.
+// constructor, to initialize the components
+// with default values.
 	public SignUpPage() {
+/*
+ * displaying sign up page
+ */
 		setTitle("Sign Up");
 		setBounds(300, 90, 530, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,7 +53,9 @@ class SignUpPage extends JFrame implements ActionListener {
 		welcomeLabel.setSize(400, 31);
 		welcomeLabel.setLocation(100, 31);
 		panel.add(welcomeLabel);
-
+/*
+ * adding first name label to text box
+ */
 		fn = new JLabel("First Name");
 		fn.setFont(new Font("Arial", Font.PLAIN, 15));
 		fn.setSize(100, 20);
@@ -53,7 +67,9 @@ class SignUpPage extends JFrame implements ActionListener {
 		fnField.setSize(190, 20);
 		fnField.setLocation(240, 100);
 		panel.add(fnField);
-
+/*
+* adding last name label to text box
+*/
 		ln = new JLabel("Last Name");
 		ln.setFont(new Font("Arial", Font.PLAIN, 15));
 		ln.setSize(100, 20);
@@ -65,7 +81,9 @@ class SignUpPage extends JFrame implements ActionListener {
 		lnField.setSize(190, 20);
 		lnField.setLocation(240, 150);
 		panel.add(lnField);
-
+/*
+* adding user name label to text box
+*/
 		user = new JLabel("Username");
 		user.setFont(new Font("Arial", Font.PLAIN, 15));
 		user.setSize(100, 20);
@@ -77,7 +95,9 @@ class SignUpPage extends JFrame implements ActionListener {
 		userField.setSize(190, 20);
 		userField.setLocation(240, 200);
 		panel.add(userField);
-
+/*
+* adding password label to text box
+*/
 		pass = new JLabel("Password");
 		pass.setFont(new Font("Arial", Font.PLAIN, 15));
 		pass.setSize(100, 20);
@@ -89,7 +109,9 @@ class SignUpPage extends JFrame implements ActionListener {
 		passField.setSize(190, 20);
 		passField.setLocation(240, 250);
 		panel.add(passField);
-
+/*
+* adding password confirmation label to text box
+*/
 		pass2 = new JLabel("Confirm password");
 		pass2.setFont(new Font("Arial", Font.PLAIN, 15));
 		pass2.setSize(200, 20);
@@ -101,7 +123,9 @@ class SignUpPage extends JFrame implements ActionListener {
 		pass2Field.setSize(190, 20);
 		pass2Field.setLocation(240, 300);
 		panel.add(pass2Field);
-
+/*
+ * creating button to submit information into the system
+ */
 		submit = new JButton("Submit");
 		submit.setFont(new Font("Arial", Font.PLAIN, 15));
 		submit.setSize(100, 40);
@@ -117,7 +141,11 @@ class SignUpPage extends JFrame implements ActionListener {
 
 		setVisible(true);
 	}
-
+/*
+ * when submit button is clicked, checks to see if fields are all filled, to see if user name is already existing,
+ * and if the confirm password matches password
+ * after successfully registered redirects to member page
+ */
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == submit) {
