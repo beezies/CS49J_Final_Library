@@ -5,7 +5,12 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class LoginPage extends JFrame implements ActionListener {
-
+/**
+* Quick constructor for login
+* 
+* @param userName
+* @param password
+*/
 	private JPanel panel = new JPanel();
 	private JLabel libLabel = new JLabel("             ~ CS49J Library ~");
 	private JLabel usrLabel = new JLabel("Enter your username:");
@@ -19,7 +24,9 @@ public class LoginPage extends JFrame implements ActionListener {
 			"<html><font size='4' color='red'> Your username or password is incorrect. </font></html>");
 
 	public LoginPage() {
-
+/*
+ * displaying login page
+ */
 		setTitle("Login Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(275, 300);
@@ -45,7 +52,9 @@ public class LoginPage extends JFrame implements ActionListener {
 		panel.add(newUserLabel);
 
 		newUserLabel.addMouseListener(new MouseListener() {
-
+/*
+ * button to redirect users to sign up page if they are currently not members
+ */
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				SignUpPage f = new SignUpPage();
@@ -72,7 +81,9 @@ public class LoginPage extends JFrame implements ActionListener {
 
 		setVisible(true);
 	}
-
+/*
+ * button to login once signed up/current and existing users can be redirected to member screen while admins are redirected to aadmin page
+ */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
