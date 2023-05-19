@@ -8,7 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class BookUtils {
-
+/*
+ * Creating a book list and storing books into file
+ and display
+ */
 	public static String[][] getBookArray() {
 		String fName = "BookList.csv";
 		String line;
@@ -28,7 +31,10 @@ public class BookUtils {
 		}
 		return null;
 	}
-
+	
+/*
+ * Gets members books and displays checkout date and whether it is overdue
+ */
 	public static String[][] getMembersBooks(Member m) {
 		JSONArray booksJSON = m.getBooks();
 		String[][] arr = new String[booksJSON.length()][3];
@@ -43,7 +49,9 @@ public class BookUtils {
 		}
 		return arr;
 	}
-
+/*
+ * method that pulls a random book from the pile and checkouts  
+ */
 	public static void randomCheckout(Member m) {
 		String[][] books = getBookArray();
 		int upper = books.length;
