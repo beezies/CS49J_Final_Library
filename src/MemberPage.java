@@ -12,7 +12,9 @@ public class MemberPage extends JFrame implements ActionListener {
 		getContentPane().setBackground(SystemColor.info);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
-
+/*
+ * button to redirect members to screen to browse the book list
+ */
 		JButton btnNewButton_1_1 = new JButton("Browse Books");
 		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_1_1, 87, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1_1, -95, SpringLayout.EAST, getContentPane());
@@ -26,7 +28,9 @@ public class MemberPage extends JFrame implements ActionListener {
 			}
 		});
 		getContentPane().add(btnNewButton_1_1);
-
+/*
+ * checkout button for members
+ */
 		JButton checkBtn = new JButton("Checked Out");
 		springLayout.putConstraint(SpringLayout.NORTH, checkBtn, 46, SpringLayout.SOUTH, btnNewButton_1_1);
 		springLayout.putConstraint(SpringLayout.WEST, checkBtn, 87, SpringLayout.WEST, getContentPane());
@@ -40,7 +44,9 @@ public class MemberPage extends JFrame implements ActionListener {
 			}
 		});
 		getContentPane().add(checkBtn);
-
+/*
+ * creating button to randomly select a book from the book list, displays that a random book has been selected
+ */
 		JButton rando = new JButton("WildCard Checkout");
 		springLayout.putConstraint(SpringLayout.NORTH, rando, 46, SpringLayout.SOUTH, checkBtn);
 		springLayout.putConstraint(SpringLayout.WEST, rando, 87, SpringLayout.WEST, getContentPane());
